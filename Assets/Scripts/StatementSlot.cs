@@ -7,7 +7,7 @@ using TMPro;
 public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     TMP_Text text;
-    RectTransform rectTransform;
+    public RectTransform rectTransform;
 
     const float lineHeight = 60f;
     const float characterWidth = 29f;
@@ -28,7 +28,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool freeFloating = false;
 
     bool updateNeeded = true;
-    int highlightedSegment = -1;
+    public int highlightedSegment = -1;
 
     public void SetUp(int i, ISlotManager m, Vector2 size, float extraSpace = 0) {
         manager = m;
@@ -80,6 +80,10 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
+    public void ForceUpdate() {
+        updateNeeded = true;
+    }
+
     void LateUpdate() {
         if (updateNeeded) {
             Display();
@@ -89,7 +93,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     void Display() {
         Debug.Log("Display");
-        
+
         string fullText = "";
 
         if (!freeFloating) {
@@ -168,7 +172,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         return -1;
     }
 
-    string CleanString(string s) {
+    public static string CleanString(string s) {
         while (s.Contains("<")) {
             int a = s.IndexOf("<");
             int b = s.IndexOf(">");

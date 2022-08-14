@@ -24,6 +24,9 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
 
     ScrollableArea scrollableArea;
 
+    public DropdownMenu dropdownMenu;
+    const float canvasWidth = 2560f;
+
     void Awake() {
         for (int i = 0; i < slotCount; i++) {
             slots.Add(Instantiate(slotPrefab, transform));
@@ -46,14 +49,20 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
             if (highlightedSlot.statement.isScopeEnder) {
                 dragDropManager.PickUp(highlightedSlot.codeBlock.hostStatement);
                 highlightedSlot.codeBlock.hostStatement.parentCodeBlock.RemoveStatement(dragDropManager.statementBeingDragged);
+
+                ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
+                RecalculateHighlightedSlot();
+            }
+            else if (highlightedSlot.statement.multiChoiceSegments.Length > 0 && highlightedSlot.highlightedSegment != -1) {
+                dropdownMenu.Display(highlightedSlot, highlightedSlot.statement.multiChoiceSegments[highlightedSlot.highlightedSegment], new Vector2((Input.mousePosition.x / Screen.width) * canvasWidth, highlightedSlot.rectTransform.anchoredPosition.y + 1256));
             }
             else {
                 dragDropManager.PickUp(highlightedSlot.statement);
                 highlightedSlot.codeBlock.RemoveStatement(dragDropManager.statementBeingDragged);
-            }
 
-            ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
-            RecalculateHighlightedSlot();
+                ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
+                RecalculateHighlightedSlot();
+            }
         }
         else if (dragDropManager.draggingStatement) {
             if (highlightedSlotIndex != -1) {

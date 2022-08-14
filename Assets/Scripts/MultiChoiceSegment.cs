@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MultiChoiceSegment
 {
-    string[] choices = new string[1];
-    int selectedChoice = 0;
+    public string[] choices = new string[1];
+    public int selectedChoice = 0;
     public readonly string correspondingSegmentInStatement;
 
     public float startBound;
@@ -18,5 +18,9 @@ public class MultiChoiceSegment
 
     public string GetChoice() {
         return choices[selectedChoice];
+    }
+
+    public void SelectChoice(int choice) {
+        selectedChoice = choice;
     }
 }
