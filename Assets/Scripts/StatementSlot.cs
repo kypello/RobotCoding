@@ -11,6 +11,8 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     const float lineHeight = 60f;
     const float characterWidth = 29f;
+    const float codeLeftmostPoint = 750f;
+    const float canvasWidth = 2560f;
     ISlotManager manager;
 
     bool mouseOver;
@@ -26,6 +28,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool freeFloating = false;
 
     bool updateNeeded = true;
+    int highlightedSegment = -1;
 
     public void SetUp(int i, ISlotManager m, Vector2 size, float extraSpace = 0) {
         manager = m;
@@ -61,6 +64,10 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (statement != s) {
             statement = s;
             updateNeeded = true;
+
+            if (statement != null && statement.multiChoiceSegments.Length > 0) {
+                CalculateSegmentBounds();
+            }
         }
     }
 
@@ -68,6 +75,8 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (highlighted != h) {
             highlighted = h;
             updateNeeded = true;
+
+            SetSegmentHighlight();
         }
     }
 
@@ -79,10 +88,12 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     void Display() {
-        text.text = "";
+        Debug.Log("Display");
+        
+        string fullText = "";
 
         if (!freeFloating) {
-            text.text += GetLineNumberString();
+            fullText += GetLineNumberString();
 
             int scope = codeBlock.scope;
             if (statement != null && statement.isScopeEnder) {
@@ -90,21 +101,80 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             }
 
             for (int i = 0; i < scope; i++) {
-                text.text += "    ";
+                fullText += "    ";
             }
         }
 
-        if (highlighted) {
-            text.text += "<mark=#FFFFFF11>";
+        if (highlighted && highlightedSegment == -1) {
+            fullText += "<mark=#FFFFFF11>";
 
             if (statement == null) {
-                text.text += "<color=#FFFFFF00>" + manager.DragDropManager.statementBeingDragged.statementText;
+                fullText += "<color=#FFFFFF00>" + manager.DragDropManager.statementBeingDragged.statementText;
             }
         }
 
         if (statement != null) {
-            text.text += statement.statementText;
+            fullText += statement.statementText;
+
+            if (statement.multiChoiceSegments.Length > 0) {
+                foreach (MultiChoiceSegment multiChoiceSegment in statement.multiChoiceSegments) {
+                    fullText = fullText.Replace(multiChoiceSegment.correspondingSegmentInStatement, multiChoiceSegment.GetChoice());
+                }
+                if (highlighted && highlightedSegment != -1) {
+                    fullText = fullText.Replace(statement.multiChoiceSegments[highlightedSegment].GetChoice(), "<mark=#FFFFFF11>" + statement.multiChoiceSegments[highlightedSegment].GetChoice() + "</mark>");
+                }
+            }
         }
+
+        text.text = fullText;
+    }
+
+    public void CalculateSegmentBounds() {
+        string statementText = statement.statementText;
+        foreach (MultiChoiceSegment multiChoiceSegment in statement.multiChoiceSegments) {
+            statementText = statementText.Replace(multiChoiceSegment.correspondingSegmentInStatement, multiChoiceSegment.GetChoice());
+        }
+
+        foreach (MultiChoiceSegment multiChoiceSegment in statement.multiChoiceSegments) {
+            int segmentStartCharacter = CleanString(statementText).IndexOf(CleanString(multiChoiceSegment.GetChoice()));
+            int segmentEndCharacter = segmentStartCharacter + CleanString(multiChoiceSegment.GetChoice()).Length;
+
+            multiChoiceSegment.startBound = (codeLeftmostPoint + (6 + codeBlock.scope * 4 + segmentStartCharacter) * characterWidth) / canvasWidth;
+            multiChoiceSegment.endBound = (codeLeftmostPoint + (6 + codeBlock.scope * 4 + segmentEndCharacter) * characterWidth) / canvasWidth;
+        }
+    }
+
+    public void SetSegmentHighlight() {
+        int highlight = CheckIfHighlightingSegment();
+        if (highlight != highlightedSegment) {
+            highlightedSegment = highlight;
+            updateNeeded = true;
+        }
+    }
+
+    int CheckIfHighlightingSegment() {
+        if (statement == null) {
+            return -1;
+        }
+
+        for (int i = 0; i < statement.multiChoiceSegments.Length; i++) {
+            float mousePos = Input.mousePosition.x / Screen.width;
+
+            if (mousePos >= statement.multiChoiceSegments[i].startBound && mousePos < statement.multiChoiceSegments[i].endBound) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    string CleanString(string s) {
+        while (s.Contains("<")) {
+            int a = s.IndexOf("<");
+            int b = s.IndexOf(">");
+            s = s.Remove(a, (b-a)+1);
+        }
+        return s;
     }
 
     /*

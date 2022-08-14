@@ -12,4 +12,6 @@ public class Statement : ScriptableObject
 
     public int scope;
     public bool isScopeEnder = false;
+
+    public MultiChoiceSegment[] multiChoiceSegments = new MultiChoiceSegment[0];
 }

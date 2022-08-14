@@ -37,6 +37,9 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
     }
 
     void Update() {
+        if (highlightedSlotIndex != -1) {
+            slots[highlightedSlotIndex].SetSegmentHighlight();
+        }
         if (!dragDropManager.draggingStatement && highlightedSlotIndex != -1 && Input.GetMouseButtonDown(0)) {
             StatementSlot highlightedSlot = slots[highlightedSlotIndex];
 
@@ -51,8 +54,6 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
 
             ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
             RecalculateHighlightedSlot();
-
-
         }
         else if (dragDropManager.draggingStatement) {
             if (highlightedSlotIndex != -1) {
