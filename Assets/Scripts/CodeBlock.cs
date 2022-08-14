@@ -8,7 +8,7 @@ public class CodeBlock
 
     public List<Statement> statements = new List<Statement>();
 
-    public int scope;
+    public int scope = 0;
 
     public void SetScope(int s) {
         scope = s;

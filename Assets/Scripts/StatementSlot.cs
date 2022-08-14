@@ -87,6 +87,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     void LateUpdate() {
+        Debug.Log((Input.mousePosition.x / Screen.width) * canvasWidth);
         if (updateNeeded) {
             Display();
             updateNeeded = false;

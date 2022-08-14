@@ -10,7 +10,7 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
     public StatementSlot slotPrefab;
     public Transform canvas;
 
-    public CodeBlock rootBlock = new CodeBlock();
+    public CodeBlock rootBlock;
 
     int mouseOverSlotIndex = -1;
     int highlightedSlotIndex = -1;
@@ -33,9 +33,14 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
             slots[i].SetUp(i, this, new Vector2(1600f, 60f));
         }
 
-        SetupTestStatements();
+        //SetupTestStatements();
 
         scrollableArea = GetComponent<ScrollableArea>();
+        //ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), -1, true);
+    }
+
+    public void LoadRobotCode(CodeBlock robotCodeBlock) {
+        rootBlock = robotCodeBlock;
         ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), -1, true);
     }
 
@@ -95,7 +100,9 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
         }
     }
 
+
     void SetupTestStatements() {
+        rootBlock = new CodeBlock();
         rootBlock.SetScope(0);
 
         for (int i = 0; i < 6; i++) {
@@ -109,6 +116,7 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
 
         rootBlock.SetScope(0);
     }
+
 
     public void UpdateScrollOffset(int scrollDelta) {
         if (dragDropManager.draggingStatement && highlightedSlotIndex != -1) {
