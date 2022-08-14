@@ -11,17 +11,22 @@ public class StatementPalette : MonoBehaviour, ISlotManager
     public DragDropManager DragDropManager => dragDropManager;
     ScrollableArea scrollableArea;
 
-    public List<Statement> availableStatements = new List<Statement>();
+    public List<Statement> templateStatements = new List<Statement>();
+    List<Statement> availableStatements = new List<Statement>();
     int highlightedSlotIndex = -1;
 
     void Awake() {
-        for (int i = 0; i < slotCount; i++) {
-            slots.Add(Instantiate(slotPrefab, transform));
-            slots[i].SetUp(i, this, new Vector2(500f, 60f), 60f);
-            slots[i].freeFloating = true;
+        foreach (Statement statement in templateStatements) {
+            availableStatements.Add(Instantiate(statement));
         }
 
-        ArrangeStatements(0);
+        for (int i = 0; i < slotCount; i++) {
+            slots.Add(Instantiate(slotPrefab, transform));
+            slots[i].SetUp(i, this, new Vector2(550f, 60f), 60f);
+            slots[i].freeFloating = true;
+            slots[i].hideSegments = true;
+            slots[i].collapsed = true;
+        }
 
         scrollableArea = GetComponent<ScrollableArea>();
 
@@ -33,10 +38,15 @@ public class StatementPalette : MonoBehaviour, ISlotManager
         }
     }
 
+    void Start() {
+        ArrangeStatements(0);
+    }
+
     void ArrangeStatements(int statementIndex) {
         for (int slotIndex = 0; slotIndex < slotCount; slotIndex++) {
             if (statementIndex < availableStatements.Count) {
                 slots[slotIndex].SetStatement(availableStatements[statementIndex]);
+
                 statementIndex++;
             }
             else {
@@ -50,7 +60,7 @@ public class StatementPalette : MonoBehaviour, ISlotManager
             if (dragDropManager.draggingStatement) {
                 dragDropManager.Drop(true);
             }
-            dragDropManager.PickUp(Instantiate(slots[highlightedSlotIndex].statement));
+            dragDropManager.PickUp(Instantiate(slots[highlightedSlotIndex].statement), true);
             slots[highlightedSlotIndex].SetHighlighted(false);
         }
     }

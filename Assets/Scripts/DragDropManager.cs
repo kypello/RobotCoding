@@ -26,21 +26,13 @@ public class DragDropManager : MonoBehaviour
         mouseStatementText = mouseStatement.GetComponent<TMP_Text>();
     }
 
-    public void PickUp(Statement statement) {
+    public void PickUp(Statement statement, bool hideMultiChoice = false) {
         draggingStatement = true;
         statementBeingDragged = statement;
 
-        mouseStatementText.text = statementBeingDragged.statementText;
-        if (statementBeingDragged.codeBlock != null) {
-            if (statementBeingDragged.codeBlock.statements.Count == 1) {
-                mouseStatementText.text += " }";
-            }
-            else {
-                mouseStatementText.text += " ... }";
-            }
-        }
+        mouseStatementText.text = StatementSlot.ColorString(StatementSlot.InsertSegments(statementBeingDragged, hideMultiChoice) + statementBeingDragged.GetCollapsedSuffix());
 
-        mouseStatement.sizeDelta = new Vector2(mouseStatementText.text.Length * characterWidth, 60f);
+        mouseStatement.sizeDelta = new Vector2(StatementSlot.CleanString(mouseStatementText.text).Length * characterWidth, 60f);
         SetMouseStatementPosition();
 
         pickedUpThisFrame = true;

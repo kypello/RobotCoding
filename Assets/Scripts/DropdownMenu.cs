@@ -6,6 +6,8 @@ using TMPro;
 
 public class DropdownMenu : MonoBehaviour
 {
+    public static DropdownMenu instance;
+
     const float lineHeight = 60f;
     const float characterWidth = 29f;
     const float canvasWidth = 2560f;
@@ -32,6 +34,8 @@ public class DropdownMenu : MonoBehaviour
     StatementSlot slot;
 
     void Awake() {
+        instance = this;
+
         rectTransform = GetComponent<RectTransform>();
         mouseOver = GetComponent<MouseOver>();
         foreach (TMP_Text itemSlot in itemSlots) {
@@ -42,7 +46,7 @@ public class DropdownMenu : MonoBehaviour
             itemSlots[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(12f, -12f - i * lineHeight);
         }
 
-        //Display(new string[]{"Item 1", "Item Number 2", "Another Item", "4th item here", "item 5"}, Vector2.zero);
+        gameObject.SetActive(false);
     }
 
     public void Display(StatementSlot sl, MultiChoiceSegment seg, Vector2 position) {
@@ -55,7 +59,7 @@ public class DropdownMenu : MonoBehaviour
         int i = 0;
         while (i < items.Length) {
             itemSlots[i].gameObject.SetActive(true);
-            itemSlots[i].text = items[i];
+            itemSlots[i].text = StatementSlot.ColorString(items[i]);
 
             int lineLength = StatementSlot.CleanString(items[i]).Length;
             if (lineLength > longestLineLength) {

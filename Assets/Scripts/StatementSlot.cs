@@ -29,6 +29,8 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     bool updateNeeded = true;
     public int highlightedSegment = -1;
+    public bool hideSegments;
+    public bool collapsed = false;
 
     public void SetUp(int i, ISlotManager m, Vector2 size, float extraSpace = 0) {
         manager = m;
@@ -65,7 +67,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             statement = s;
             updateNeeded = true;
 
-            if (statement != null && statement.multiChoiceSegments.Length > 0) {
+            if (statement != null && statement.highlightableSegments.Length > 0) {
                 CalculateSegmentBounds();
             }
         }
@@ -91,16 +93,21 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    void Display() {
-        Debug.Log("Display");
+    int GetScope() {
+        if (codeBlock != null) {
+            return codeBlock.scope;
+        }
+        return 0;
+    }
 
+    void Display() {
         string fullText = "";
 
         if (!freeFloating) {
             fullText += GetLineNumberString();
 
             int scope = codeBlock.scope;
-            if (statement != null && statement.isScopeEnder) {
+            if (statement != null && statement.displayOnParentScope) {
                 scope--;
             }
 
@@ -113,38 +120,59 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             fullText += "<mark=#FFFFFF11>";
 
             if (statement == null) {
-                fullText += "<color=#FFFFFF00>" + manager.DragDropManager.statementBeingDragged.statementText;
+                fullText += "<color=#FFFFFF00>";
+                int characterCount = CleanString(manager.DragDropManager.statementBeingDragged.statementText).Length;
+                for (int i = 0; i < characterCount; i++) {
+                    fullText += 'a';
+                }
             }
         }
 
         if (statement != null) {
-            fullText += statement.statementText;
+            string statementText = statement.statementText;
 
-            if (statement.multiChoiceSegments.Length > 0) {
-                foreach (MultiChoiceSegment multiChoiceSegment in statement.multiChoiceSegments) {
-                    fullText = fullText.Replace(multiChoiceSegment.correspondingSegmentInStatement, multiChoiceSegment.GetChoice());
+            if (statement.highlightableSegments.Length > 0) {
+                for (int i = 0; i < statement.highlightableSegments.Length; i++) {
+                    if (highlighted && highlightedSegment == i) {
+                        statementText = statementText.Replace(statement.highlightableSegments[i].correspondingSegmentInStatement, "<mark=#FFFFFF11>" + statement.highlightableSegments[i].GetText() + "</mark>");
+                    }
+                    else {
+                        if (hideSegments && statement.hasMultiChoiceSegments) {
+                            statementText = statementText.Replace(statement.highlightableSegments[i].correspondingSegmentInStatement, "");
+                        }
+                        else {
+                            statementText = statementText.Replace(statement.highlightableSegments[i].correspondingSegmentInStatement, statement.highlightableSegments[i].GetText());
+                        }
+                    }
                 }
-                if (highlighted && highlightedSegment != -1) {
-                    fullText = fullText.Replace(statement.multiChoiceSegments[highlightedSegment].GetChoice(), "<mark=#FFFFFF11>" + statement.multiChoiceSegments[highlightedSegment].GetChoice() + "</mark>");
-                }
+            }
+
+            fullText += statementText;
+
+            if (collapsed) {
+                fullText += statement.GetCollapsedSuffix();
+            }
+
+            if (statement.invisibleInCode && !freeFloating) {
+                fullText = fullText.Replace("<com>", "<inv>");
             }
         }
 
-        text.text = fullText;
+        text.text = ColorString(fullText);
     }
 
     public void CalculateSegmentBounds() {
         string statementText = statement.statementText;
-        foreach (MultiChoiceSegment multiChoiceSegment in statement.multiChoiceSegments) {
-            statementText = statementText.Replace(multiChoiceSegment.correspondingSegmentInStatement, multiChoiceSegment.GetChoice());
+        foreach (HighlightableSegment highlightableSegment in statement.highlightableSegments) {
+            statementText = statementText.Replace(highlightableSegment.correspondingSegmentInStatement, highlightableSegment.GetText());
         }
 
-        foreach (MultiChoiceSegment multiChoiceSegment in statement.multiChoiceSegments) {
-            int segmentStartCharacter = CleanString(statementText).IndexOf(CleanString(multiChoiceSegment.GetChoice()));
-            int segmentEndCharacter = segmentStartCharacter + CleanString(multiChoiceSegment.GetChoice()).Length;
+        foreach (HighlightableSegment highlightableSegment in statement.highlightableSegments) {
+            int segmentStartCharacter = CleanString(statementText).IndexOf(CleanString(highlightableSegment.GetText()));
+            int segmentEndCharacter = segmentStartCharacter + CleanString(highlightableSegment.GetText()).Length;
 
-            multiChoiceSegment.startBound = (codeLeftmostPoint + (6 + codeBlock.scope * 4 + segmentStartCharacter) * characterWidth) / canvasWidth;
-            multiChoiceSegment.endBound = (codeLeftmostPoint + (6 + codeBlock.scope * 4 + segmentEndCharacter) * characterWidth) / canvasWidth;
+            highlightableSegment.startBound = (codeLeftmostPoint + (6 + GetScope() * 4 + segmentStartCharacter) * characterWidth) / canvasWidth;
+            highlightableSegment.endBound = (codeLeftmostPoint + (6 + GetScope() * 4 + segmentEndCharacter) * characterWidth) / canvasWidth;
         }
     }
 
@@ -161,15 +189,31 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             return -1;
         }
 
-        for (int i = 0; i < statement.multiChoiceSegments.Length; i++) {
+        for (int i = 0; i < statement.highlightableSegments.Length; i++) {
             float mousePos = Input.mousePosition.x / Screen.width;
 
-            if (mousePos >= statement.multiChoiceSegments[i].startBound && mousePos < statement.multiChoiceSegments[i].endBound) {
+            if (mousePos >= statement.highlightableSegments[i].startBound && mousePos < statement.highlightableSegments[i].endBound) {
                 return i;
             }
         }
 
         return -1;
+    }
+
+    public static string InsertSegments(Statement s, bool hideMultiChoice) {
+        string text = s.statementText;
+        if (s.hasMultiChoiceSegments && hideMultiChoice) {
+            for (int i = 0; i < s.highlightableSegments.Length; i++) {
+                text = text.Replace(s.highlightableSegments[i].correspondingSegmentInStatement, "");
+            }
+        }
+        else {
+            for (int i = 0; i < s.highlightableSegments.Length; i++) {
+                text = text.Replace(s.highlightableSegments[i].correspondingSegmentInStatement, s.highlightableSegments[i].GetText());
+            }
+        }
+
+        return text;
     }
 
     public static string CleanString(string s) {
@@ -181,15 +225,9 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         return s;
     }
 
-    /*
-    public void Highlight(int highlightLength) {
-        string highlightText = GetLineNumberString() + "<mark=#FFFFFF11><color=#FFFFFF00>";
-        for (int i = 0; i < highlightLength; i++) {
-            highlightText += "a";
-        }
-        text.text = highlightText;
+    public static string ColorString(string s) {
+        return s.Replace("<fun>", "<color=#FF8888>").Replace("<val>", "<color=#AAFFAA>").Replace("<def>", "</color>").Replace("<key>", "<color=#FF88FF>").Replace("<com>", "<color=#FFFFFF22>").Replace("<inv>", "<color=#FFFFFF00>");
     }
-    */
 
     public void OnPointerEnter(PointerEventData eventData) {
         mouseOver = true;

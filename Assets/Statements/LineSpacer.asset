@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3b36587fd23e525f8f7934aa51a970e, type: 3}
-  m_Name: TurnRight
+  m_Name: LineSpacer
   m_EditorClassIdentifier: 
-  statementText: <fun>turnRight<def>();
+  statementText: <com>[line spacer]<def>
   scope: 0
   isScopeEnder: 0
+  displayOnParentScope: 0
+  invisibleInCode: 1
   hasMultiChoiceSegments: 0

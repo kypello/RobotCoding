@@ -15,4 +15,5 @@ MonoBehaviour:
   statementText: '}'
   scope: 0
   isScopeEnder: 1
-  scopeOpener: {fileID: 0}
+  displayOnParentScope: 1
+  hasMultiChoiceSegments: 0

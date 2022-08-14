@@ -46,15 +46,15 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
         if (!dragDropManager.draggingStatement && highlightedSlotIndex != -1 && Input.GetMouseButtonDown(0)) {
             StatementSlot highlightedSlot = slots[highlightedSlotIndex];
 
-            if (highlightedSlot.statement.isScopeEnder) {
+            if (highlightedSlot.statement.displayOnParentScope) {
                 dragDropManager.PickUp(highlightedSlot.codeBlock.hostStatement);
                 highlightedSlot.codeBlock.hostStatement.parentCodeBlock.RemoveStatement(dragDropManager.statementBeingDragged);
 
                 ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
                 RecalculateHighlightedSlot();
             }
-            else if (highlightedSlot.statement.multiChoiceSegments.Length > 0 && highlightedSlot.highlightedSegment != -1) {
-                dropdownMenu.Display(highlightedSlot, highlightedSlot.statement.multiChoiceSegments[highlightedSlot.highlightedSegment], new Vector2((Input.mousePosition.x / Screen.width) * canvasWidth, highlightedSlot.rectTransform.anchoredPosition.y + 1256));
+            else if (highlightedSlot.statement.highlightableSegments.Length > 0 && highlightedSlot.highlightedSegment != -1) {
+                highlightedSlot.statement.highlightableSegments[highlightedSlot.highlightedSegment].Click(highlightedSlot);
             }
             else {
                 dragDropManager.PickUp(highlightedSlot.statement);
@@ -63,6 +63,7 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
                 ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
                 RecalculateHighlightedSlot();
             }
+
         }
         else if (dragDropManager.draggingStatement) {
             if (highlightedSlotIndex != -1) {

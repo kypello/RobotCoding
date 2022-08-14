@@ -12,6 +12,19 @@ public class Statement : ScriptableObject
 
     public int scope;
     public bool isScopeEnder = false;
+    public bool displayOnParentScope = false;
+    public bool invisibleInCode = false;
 
-    public MultiChoiceSegment[] multiChoiceSegments = new MultiChoiceSegment[0];
+    public HighlightableSegment[] highlightableSegments = new HighlightableSegment[0];
+    public bool hasMultiChoiceSegments = false;
+
+    void Awake() {
+        Debug.Log("StatementAwake!!");
+    }
+
+    public virtual void InitializeSegments() {}
+
+    public virtual string GetCollapsedSuffix() {
+        return "";
+    }
 }

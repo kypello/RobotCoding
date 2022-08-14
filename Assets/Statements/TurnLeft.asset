@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b36587fd23e525f8f7934aa51a970e, type: 3}
   m_Name: TurnLeft
   m_EditorClassIdentifier: 
-  statementText: turnLeft();
+  statementText: <fun>turnLeft<def>();
+  scope: 0
+  isScopeEnder: 0
+  hasMultiChoiceSegments: 0
