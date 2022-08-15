@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot : MonoBehaviour
+public class Robot : MovingElement
 {
     public CodeBlock rootBlock;
     bool breakFlag = false;
 
-    public float speed;
     public float rotationSpeed = 90f;
     bool cancelExecution = false;
 
     bool paused = false;
-    public static float timeScale = 1f;
 
     bool runAttemptInQueue = false;
 
@@ -21,6 +19,9 @@ public class Robot : MonoBehaviour
     public State state = State.Stopped;
 
     int currentLine;
+
+    public Transform cratePoint;
+    MovingElement crate = null;
 
     void Awake() {
         rootBlock = new CodeBlock();
@@ -151,10 +152,45 @@ public class Robot : MonoBehaviour
                     }
                     breakFlag = false;
                     break;
+
+                case "pickup":
+                    yield return PickUp();
+                    break;
+
+                case "drop":
+                    yield return Drop();
+                    break;
             }
         }
         Debug.Log("End of executing code block");
         yield break;
+    }
+
+    IEnumerator PickUp() {
+        if (crate != null) {
+            yield break;
+        }
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f, 1<<7)) {
+            if (hit.collider.gameObject.tag == "Crate") {
+                crate = hit.collider.GetComponent<MovingElement>();
+                crate.transform.SetParent(cratePoint);
+                crate.transform.localPosition = Vector3.zero;
+                crate.transform.localEulerAngles = Vector3.zero;
+            }
+        }
+        yield break;
+    }
+
+    IEnumerator Drop() {
+        if (crate == null) {
+            yield break;
+        }
+
+        crate.transform.SetParent(null);
+        yield return crate.MoveOneSpace(1f);
+        crate = null;
     }
 
     IEnumerator Wait(int seconds) {
@@ -178,46 +214,11 @@ public class Robot : MonoBehaviour
                 break;
             }
 
-            bool pathBlocked = Physics.Raycast(transform.position, transform.forward * Mathf.Sign(spaces), 2f, 1<<7);
-
-            Vector3 startPosition = transform.position;
-            Vector3 targetPosition = startPosition + transform.forward * Mathf.Sign(spaces) * 2f;
-
-            if (pathBlocked) {
-                float progress = 0f;
-                while (progress < 0.2f) {
-                    progress += Time.deltaTime * timeScale * speed;
-                    transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
-                    yield return null;
-                }
-                //yield return new WaitForSeconds(0.25f);
-                while (progress >= 0f) {
-                    progress -= Time.deltaTime * timeScale * speed;
-                    transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
-                    yield return null;
-                }
-            }
-            else {
-                float progress = 0f;
-                while (progress < 1f) {
-                    progress += Time.deltaTime * timeScale * speed;
-                    transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
-                    yield return null;
-                }
-
-                while (!Physics.Raycast(transform.position, -transform.up, 2f, 1<<7)) {
-                    startPosition = transform.position;
-                    targetPosition = startPosition - transform.up * 2f;
-                    progress = 0f;
-                    while (progress < 1f) {
-                        progress += Time.deltaTime * timeScale * speed * 2f;
-                        transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
-                        yield return null;
-                    }
-                }
-            }
+            yield return MoveOneSpace(Mathf.Sign(spaces));
         }
     }
+
+
 
     IEnumerator Rotate(float direction) {
         float amountRotated = 0f;

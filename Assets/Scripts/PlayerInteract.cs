@@ -100,7 +100,7 @@ public class PlayerInteract : MonoBehaviour
         codeEditorOpen = true;
         robot = r;
 
-        Robot.timeScale = 0f;
+        MovingElement.timeScale = 0f;
         codeEditor.SetActive(true);
         player.control = false;
         playerLook.control = false;
@@ -134,7 +134,7 @@ public class PlayerInteract : MonoBehaviour
     void CloseCodeEditor() {
         codeEditorOpen = false;
 
-        Robot.timeScale = 1f;
+        MovingElement.timeScale = 1f;
         codeEditor.SetActive(false);
         player.control = true;
         playerLook.control = true;

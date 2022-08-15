@@ -12,6 +12,7 @@ public class PlayerLook : MonoBehaviour
     Vector3 lockOnPoint;
 
     bool lookingAtPoint = false;
+    bool mouseMovedSinceUnlocking;
 
     //public Pause pause;
     //public PlayButton playButton;
@@ -25,15 +26,23 @@ public class PlayerLook : MonoBehaviour
         //    Cursor.lockState = CursorLockMode.Locked;
         //}
 
-
-
         if (control) {
             Cursor.lockState = CursorLockMode.Locked;
-            xRotation -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            if (mouseMovedSinceUnlocking) {
+                xRotation -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+                transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-            controller.transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime);
+                controller.transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime);
+            }
+            else {
+                if (Input.GetAxis("Mouse X") != 0f || Input.GetAxis("Mouse Y") != 0f) {
+                    mouseMovedSinceUnlocking = true;
+                }
+            }
+        }
+        else {
+            mouseMovedSinceUnlocking = false;
         }
     }
 
