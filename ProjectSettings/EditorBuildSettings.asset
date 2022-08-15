@@ -12,9 +12,18 @@ EditorBuildSettings:
     path: Assets/Scenes/TwoButtonLoopLevel.unity
     guid: 673e214497e21f9018f7d9cd8228e088
   - enabled: 1
+    path: Assets/Scenes/LavaMazeLevel.unity
+    guid: b92dcd1473e5e483c8118608313b4d88
+  - enabled: 1
+    path: Assets/Scenes/CrateIntroLevel.unity
+    guid: e4e547d355606a9b88ebbaf568412a26
+  - enabled: 1
     path: Assets/Scenes/CrateBridgeLevel.unity
     guid: 4ae573f037b8e25ec8acfa1b3a751d44
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/EndingScene.unity
+    guid: 0f7f4f8f8399d04d0896b3b36260ac86
   m_configObjects: {}

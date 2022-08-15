@@ -160,6 +160,8 @@ public class Robot : MovingElement
                     yield return Drop();
                     break;
             }
+
+            yield return null;
         }
         Debug.Log("End of executing code block");
         yield break;
@@ -196,9 +198,17 @@ public class Robot : MovingElement
             yield break;
         }
 
-        crate.transform.SetParent(null);
+        bool crateBlocked = Physics.Raycast(transform.position + Vector3.up * 2f, transform.forward * 2f, 2f, 1<<7);
+
+        if (!crateBlocked) {
+            crate.transform.SetParent(null);
+        }
+
         yield return crate.MoveOneSpace(1f);
-        crate = null;
+
+        if (!crateBlocked) {
+            crate = null;
+        }
     }
 
     IEnumerator Wait(int seconds) {
@@ -250,15 +260,58 @@ public class Robot : MovingElement
     bool EvaluateConditionSpecifics(string checkType, bool equality, string checkTarget) {
         Debug.Log("Checking condition");
         if (checkType == "checkBelow() ") {
+            if (checkTarget == "button") {
+                return CheckForButtonBelow(transform.position) == equality;
+            }
+            else if (checkTarget == "crate") {
+                return CheckForCrateBelow(transform.position) == equality;
+            }
+            else if (checkTarget == "metal") {
+                return (!CheckForButtonBelow(transform.position) && !CheckForCrateBelow(transform.position)) == equality;
+            }
             return !equality;
         }
+        else if (checkType == "checkInFront() ") {
+            if (checkTarget == "button") {
+                return CheckForButtonBelow(transform.position + transform.forward * 2f) == equality;
+            }
+            else if (checkTarget == "crate") {
+                return (CheckForCrateAhead() || CheckForCrateBelow(transform.position + transform.forward * 2f)) == equality;
+            }
+            else if (checkTarget == "metal") {
+                return (!CheckForButtonBelow(transform.position + transform.forward * 2f) && !CheckForCrateBelow(transform.position + transform.forward * 2f) && !CheckForWallAhead() && CheckForFloorBelow(transform.position + transform.forward * 2f)) == equality;
+            }
+            else if (checkTarget == "wall") {
+                return CheckForWallAhead() == equality;
+            }
+            else if (checkTarget == "pit") {
+                return !CheckForFloorBelow(transform.position + transform.forward * 2f) == equality;
+            }
+        }
 
-        if (checkTarget == "wall") {
-            return Physics.Raycast(transform.position, transform.forward, 2f, 1<<7) == equality;
-        }
-        else if (checkTarget == "pit") {
-            return (!Physics.Raycast(transform.position, transform.forward, 2f, 1<<7) && !Physics.Raycast(transform.position + transform.forward * 2f, -transform.up, 2f, 1<<7)) == equality;
-        }
         return false;
+    }
+
+    bool CheckForButtonBelow(Vector3 position) {
+        RaycastHit hit;
+        return Physics.Raycast(position, Vector3.down, out hit, 2f, 1<<8, QueryTriggerInteraction.Collide);
+    }
+
+    bool CheckForCrateBelow(Vector3 position) {
+        RaycastHit hit;
+        return Physics.Raycast(position, Vector3.down, out hit, 2f, 1<<7) && hit.collider.gameObject.tag == "Crate";
+    }
+
+    bool CheckForFloorBelow(Vector3 position) {
+        return Physics.Raycast(position, Vector3.down, 2f, 1<<7);
+    }
+
+    bool CheckForCrateAhead() {
+        RaycastHit hit;
+        return Physics.Raycast(transform.position, transform.forward, out hit, 2f, 1<<7) && hit.collider.gameObject.tag == "Crate";
+    }
+
+    bool CheckForWallAhead() {
+        return Physics.Raycast(transform.position, transform.forward, 2f, 1<<7);
     }
 }
