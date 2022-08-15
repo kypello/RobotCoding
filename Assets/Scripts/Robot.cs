@@ -180,7 +180,11 @@ public class Robot : MovingElement
                 crate.transform.localEulerAngles = Vector3.zero;
             }
         }
-        yield break;
+        float timePassed = 0f;
+        while (timePassed < 0.5f) {
+            timePassed += Time.deltaTime * timeScale;
+            yield return null;
+        }
     }
 
     IEnumerator Drop() {
