@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: ea7ad40e6a537406ca868381a52fb431
+  - enabled: 1
+    path: Assets/Scenes/TwoButtonLoopLevel.unity
+    guid: 673e214497e21f9018f7d9cd8228e088
+  - enabled: 1
+    path: Assets/Scenes/CrateBridgeLevel.unity
+    guid: 4ae573f037b8e25ec8acfa1b3a751d44
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

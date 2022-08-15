@@ -27,12 +27,6 @@ public class Robot : MovingElement
         rootBlock = new CodeBlock();
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
-            StartCoroutine(RunCode());
-        }
-    }
-
     public void StopRunningCode() {
         state = State.Stopping;
     }
@@ -172,13 +166,18 @@ public class Robot : MovingElement
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f, 1<<7)) {
-            if (hit.collider.gameObject.tag == "Crate") {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f, 1<<7) && hit.collider.gameObject.tag == "Crate") {
+            crate = hit.collider.GetComponent<MovingElement>();
+
+            int stacked = 0;
+            while (Physics.Raycast(transform.position + transform.forward + transform.up * stacked * 2f, transform.up, out hit, 2f, 1<<7) && hit.collider.gameObject.tag == "Crate") {
                 crate = hit.collider.GetComponent<MovingElement>();
-                crate.transform.SetParent(cratePoint);
-                crate.transform.localPosition = Vector3.zero;
-                crate.transform.localEulerAngles = Vector3.zero;
+                stacked++;
             }
+
+            crate.transform.SetParent(cratePoint);
+            crate.transform.localPosition = Vector3.zero;
+            crate.transform.localEulerAngles = Vector3.zero;
         }
         float timePassed = 0f;
         while (timePassed < 0.5f) {

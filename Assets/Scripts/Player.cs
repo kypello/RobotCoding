@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (control && controller.isGrounded && Input.GetKeyDown(KeyCode.Space)) {
+        if (false && control && controller.isGrounded && Input.GetKeyDown(KeyCode.Space)) {
             jump.Play();
             vy = jumpStrength;
         }

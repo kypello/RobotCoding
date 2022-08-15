@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerInteract : MonoBehaviour
@@ -25,6 +26,11 @@ public class PlayerInteract : MonoBehaviour
     }
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            return;
+        }
+
         if (!codeEditorOpen) {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, 3f, 1<<6)) {
