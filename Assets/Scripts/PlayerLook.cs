@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerLook : MonoBehaviour
 {
     public CharacterController controller;
-    public float sensitivity;
+    static float sensitivity = 500f;
+    float sensitivityMessageTimer = -1f;
     float xRotation = 0f;
+    public TMP_Text sensitivityUpdateText;
 
     public bool control = true;
     Vector3 lockOnPoint;
@@ -28,6 +31,20 @@ public class PlayerLook : MonoBehaviour
 
         if (control) {
             Cursor.lockState = CursorLockMode.Locked;
+
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                sensitivity += 50f;
+                sensitivityUpdateText.gameObject.SetActive(true);
+                sensitivityUpdateText.text = "sensitivity: " + sensitivity;
+                sensitivityMessageTimer = 2f;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) && sensitivity > 51f) {
+                sensitivity -= 50f;
+                sensitivityUpdateText.gameObject.SetActive(true);
+                sensitivityUpdateText.text = "sensitivity: " + sensitivity;
+                sensitivityMessageTimer = 2f;
+            }
+
             if (mouseMovedSinceUnlocking) {
                 xRotation -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
                 xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -43,6 +60,13 @@ public class PlayerLook : MonoBehaviour
         }
         else {
             mouseMovedSinceUnlocking = false;
+        }
+
+        if (sensitivityMessageTimer > 0f) {
+            sensitivityMessageTimer -= Time.deltaTime;
+            if (sensitivityMessageTimer <= 0f) {
+                sensitivityUpdateText.gameObject.SetActive(false);
+            }
         }
     }
 
