@@ -2539,7 +2539,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &384338771
 PrefabInstance:
@@ -3691,6 +3691,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+--- !u!82 &1256883187 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7335924624762354834, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+  m_PrefabInstance: {fileID: 1256883186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1295273837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9890,7 +9895,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1573469988
 PrefabInstance:
@@ -10052,6 +10057,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 336945874, guid: 552e6c940eddfa8bf86b8e23aef8a4a6, type: 3}
+      propertyPath: percussion
+      value: 
+      objectReference: {fileID: 1256883187}
     - target: {fileID: 4973582357555678599, guid: 552e6c940eddfa8bf86b8e23aef8a4a6, type: 3}
       propertyPath: m_RootOrder
       value: 0

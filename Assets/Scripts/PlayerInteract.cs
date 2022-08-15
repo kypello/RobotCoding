@@ -17,6 +17,8 @@ public class PlayerInteract : MonoBehaviour
     MouseOver closeMouseOver;
     MouseOver runMouseOver;
 
+    public AudioSource melody;
+
     Robot robot;
     bool codeEditorOpen = false;
 
@@ -106,6 +108,7 @@ public class PlayerInteract : MonoBehaviour
         codeEditorOpen = true;
         robot = r;
 
+        melody.volume = 0f;
         MovingElement.timeScale = 0f;
         codeEditor.SetActive(true);
         player.control = false;
@@ -140,6 +143,7 @@ public class PlayerInteract : MonoBehaviour
     void CloseCodeEditor() {
         codeEditorOpen = false;
 
+        melody.volume = 0.6f;
         MovingElement.timeScale = 1f;
         codeEditor.SetActive(false);
         player.control = true;

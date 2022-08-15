@@ -19,6 +19,8 @@ public class Robot : MovingElement
     public State state = State.Stopped;
 
     int currentLine;
+    public AudioSource percussion;
+    public AudioSource movingSound;
 
     public Transform cratePoint;
     MovingElement crate = null;
@@ -29,6 +31,7 @@ public class Robot : MovingElement
 
     public void StopRunningCode() {
         state = State.Stopping;
+        percussion.volume = 0f;
     }
 
     public int GetCurrentLine() {
@@ -53,9 +56,11 @@ public class Robot : MovingElement
         Debug.Log("Starting Run");
 
         state = State.Running;
+        percussion.volume = 0.6f;
         breakFlag = false;
         yield return ExecuteCodeBlock(rootBlock, 0);
         state = State.Stopped;
+        percussion.volume = 0f;
         Debug.Log("Code done running");
     }
 
@@ -212,18 +217,20 @@ public class Robot : MovingElement
     }
 
     IEnumerator Move(int spaces) {
+        movingSound.Play();
         for (int i = 0; i < Mathf.Abs(spaces); i++) {
             if (state == State.Stopping) {
                 break;
             }
-
             yield return MoveOneSpace(Mathf.Sign(spaces));
         }
+        movingSound.Stop();
     }
 
 
 
     IEnumerator Rotate(float direction) {
+        movingSound.Play();
         float amountRotated = 0f;
         Vector3 targetRotation = transform.eulerAngles + Vector3.up * 90f * direction;
         while (amountRotated < 90f) {
@@ -233,6 +240,7 @@ public class Robot : MovingElement
             amountRotated += rotation;
         }
         transform.eulerAngles = targetRotation;
+        movingSound.Stop();
     }
 
     bool EvaluateCondition(Statement statement) {

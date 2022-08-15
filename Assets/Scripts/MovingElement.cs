@@ -6,6 +6,9 @@ public class MovingElement : MonoBehaviour
 {
     public static float timeScale = 1f;
     public float speed = 2f;
+    public AudioSource hitWall;
+    public AudioSource land;
+    public ParticleSystem landParticles;
 
     public IEnumerator MoveOneSpace(float direction) {
         bool pathBlocked = Physics.Raycast(transform.position, transform.forward * direction, 2f, 1<<7);
@@ -20,6 +23,7 @@ public class MovingElement : MonoBehaviour
                 transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
                 yield return null;
             }
+            hitWall.Play();
             //yield return new WaitForSeconds(0.25f);
             while (progress >= 0f) {
                 progress -= Time.deltaTime * timeScale * speed;
@@ -35,7 +39,9 @@ public class MovingElement : MonoBehaviour
                 yield return null;
             }
 
+            bool wasInAir = false;
             while (!Physics.Raycast(transform.position, -transform.up, 2f, 1<<7)) {
+                wasInAir = true;
                 startPosition = transform.position;
                 targetPosition = startPosition - transform.up * 2f;
                 progress = 0f;
@@ -44,6 +50,10 @@ public class MovingElement : MonoBehaviour
                     transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
                     yield return null;
                 }
+            }
+            if (wasInAir) {
+                land.Play();
+                landParticles.Play();
             }
         }
     }

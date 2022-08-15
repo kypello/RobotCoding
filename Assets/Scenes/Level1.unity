@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 336945874, guid: 552e6c940eddfa8bf86b8e23aef8a4a6, type: 3}
+      propertyPath: percussion
+      value: 
+      objectReference: {fileID: 1232830047}
     - target: {fileID: 4973582357555678599, guid: 552e6c940eddfa8bf86b8e23aef8a4a6, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1549,6 +1553,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+--- !u!82 &1232830047 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7335924624762354834, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+  m_PrefabInstance: {fileID: 1232830046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1856370915
 Mesh:
   m_ObjectHideFlags: 0
