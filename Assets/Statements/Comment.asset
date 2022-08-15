@@ -15,7 +15,10 @@ MonoBehaviour:
   statementText: <com>//[a]<def>
   scope: 0
   isScopeEnder: 0
+  displayOnParentScope: 0
+  invisibleInCode: 0
   hasMultiChoiceSegments: 0
+  id: comment
   number: 0
   negativesAllowed: 0
   defaultText: comment

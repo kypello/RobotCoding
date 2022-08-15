@@ -140,8 +140,9 @@ public class TextInputMonitor : MonoBehaviour
                 cursor++;
             }
             else if (c == '-' &&
-                !(number && cursor == 0 && !(text.Length > 0 && text[0] == '-')) &&
-                !(number && !negativesAllowed)) 
+                !(number && cursor > 0) &&
+                !(number && cursor == 0 && text.Length > 0 && text[0] == '-') && 
+                !(number && !negativesAllowed))
             {
                 text = text.Insert(cursor, "" + c);
                 cursor++;

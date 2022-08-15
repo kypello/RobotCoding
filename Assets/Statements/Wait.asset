@@ -15,7 +15,10 @@ MonoBehaviour:
   statementText: <fun>wait<def>(<val>[a]<def>);
   scope: 0
   isScopeEnder: 0
+  displayOnParentScope: 0
+  invisibleInCode: 0
   hasMultiChoiceSegments: 0
+  id: wait
   number: 1
   negativesAllowed: 0
   defaultText: 1

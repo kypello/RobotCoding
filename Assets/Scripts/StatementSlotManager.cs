@@ -21,8 +21,11 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
     public DragDropManager DragDropManager => dragDropManager;
 
     public Statement scopeEnderStatement;
+    public bool codeChanged = false;
 
     ScrollableArea scrollableArea;
+
+    int currentRunningLine;
 
     public DropdownMenu dropdownMenu;
     const float canvasWidth = 2560f;
@@ -49,6 +52,7 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
             slots[highlightedSlotIndex].SetSegmentHighlight();
         }
         if (!dragDropManager.draggingStatement && highlightedSlotIndex != -1 && Input.GetMouseButtonDown(0)) {
+            codeChanged = true;
             StatementSlot highlightedSlot = slots[highlightedSlotIndex];
 
             if (highlightedSlot.statement.displayOnParentScope) {
@@ -77,6 +81,7 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
 
             if (Input.GetMouseButtonDown(0)) {
                 if (highlightedSlotIndex != -1) {
+                    codeChanged = true;
                     StatementSlot highlightedSlot = slots[highlightedSlotIndex];
 
                     highlightedSlot.codeBlock.InsertStatement(dragDropManager.statementBeingDragged, highlightedSlot.localIndex);
@@ -100,6 +105,17 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
         }
     }
 
+    public void SetCurrentRunningLine(int line) {
+        int locallyIndexedLine = currentRunningLine - scrollableArea.GetOffset();
+        if (locallyIndexedLine >= 0 && locallyIndexedLine < slotCount) {
+            slots[locallyIndexedLine].SetFullLineHighlight(false);
+        }
+        currentRunningLine = line;
+        locallyIndexedLine = currentRunningLine - scrollableArea.GetOffset();
+        if (locallyIndexedLine >= 0 && locallyIndexedLine < slotCount) {
+            slots[locallyIndexedLine].SetFullLineHighlight(true);
+        }
+    }
 
     void SetupTestStatements() {
         rootBlock = new CodeBlock();
@@ -167,6 +183,12 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
                 slots[slotIndex].globalIndex = slotIndex;
                 slots[slotIndex].codeBlock = codeBlock;
                 slots[slotIndex].SetLineNumber(slotIndex + scrollableArea.GetOffset());
+                if (slotIndex + scrollableArea.GetOffset() == currentRunningLine) {
+                    slots[slotIndex].SetFullLineHighlight(true);
+                }
+                else {
+                    slots[slotIndex].SetFullLineHighlight(false);
+                }
             }
 
             if (slotIndex >= 0 && slotIndex == gap) {

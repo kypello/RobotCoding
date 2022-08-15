@@ -16,4 +16,6 @@ MonoBehaviour:
   scope: 0
   isScopeEnder: 1
   displayOnParentScope: 1
+  invisibleInCode: 0
   hasMultiChoiceSegments: 0
+  id: scopeend

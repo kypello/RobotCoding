@@ -18,9 +18,7 @@ public class Statement : ScriptableObject
     public HighlightableSegment[] highlightableSegments = new HighlightableSegment[0];
     public bool hasMultiChoiceSegments = false;
 
-    void Awake() {
-        Debug.Log("StatementAwake!!");
-    }
+    public string id;
 
     public virtual void InitializeSegments() {}
 

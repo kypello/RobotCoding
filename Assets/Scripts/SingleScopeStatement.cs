@@ -8,23 +8,15 @@ public class SingleScopeStatement : Statement
     public Statement scopeEnder;
 
     void Awake() {
-        Debug.Log("StatementAwake!!");
-
         codeBlock = new CodeBlock();
         codeBlock.hostStatement = this;
-        codeBlock.statements.Add(Instantiate(scopeEnder));
+        codeBlock.InsertStatement(Instantiate(scopeEnder), 0);
 
         InitializeSegments();
-
-        hasMultiChoiceSegments = true;
+        InsertStatements();
     }
 
-    public override void InitializeSegments() {
-        highlightableSegments = new HighlightableSegment[3];
-        highlightableSegments[0] = new MultiChoiceSegment(new string[]{"<fun>checkBelow<def>() ", "<fun>checkInFront<def>() "}, "[a]");
-        highlightableSegments[1] = new MultiChoiceSegment(new string[]{ "<key>==<def> ", "<key>!=<def> "}, "[b]");
-        highlightableSegments[2] = new MultiChoiceSegment(new string[]{"<val>red<def>", "<val>blue<def>"}, "[c]");
-    }
+    protected virtual void InsertStatements() {}
 
     public override string GetCollapsedSuffix() {
         if (codeBlock.statements.Count > 1) {

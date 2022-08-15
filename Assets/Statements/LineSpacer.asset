@@ -18,3 +18,4 @@ MonoBehaviour:
   displayOnParentScope: 0
   invisibleInCode: 1
   hasMultiChoiceSegments: 0
+  id: linespacer

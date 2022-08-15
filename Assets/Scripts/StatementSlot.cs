@@ -21,6 +21,7 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public Statement statement = null;
     bool highlighted = false;
     int lineNumber;
+    bool fullLineHighlight;
 
     public int globalIndex;
     public int localIndex;
@@ -47,11 +48,18 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     string GetLineNumberString() {
-        if (lineNumber < 9) {
-            return "<color=#FFFFFF22> " + (lineNumber + 1) + "</color>    ";
+        string color;
+        if (fullLineHighlight) {
+            color = "<color=#FFFFFFAA>";
         }
         else {
-            return "<color=#FFFFFF22>" + (lineNumber + 1) + "</color>    ";
+            color = "<color=#FFFFFF22>";
+        }
+        if (lineNumber < 9) {
+            return color + " " + (lineNumber + 1) + "</color>    ";
+        }
+        else {
+            return color + (lineNumber + 1) + "</color>    ";
         }
     }
 
@@ -82,12 +90,18 @@ public class StatementSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
+    public void SetFullLineHighlight(bool h) {
+        if (fullLineHighlight != h) {
+            fullLineHighlight = h;
+            updateNeeded = true;
+        }
+    }
+
     public void ForceUpdate() {
         updateNeeded = true;
     }
 
     void LateUpdate() {
-        Debug.Log((Input.mousePosition.x / Screen.width) * canvasWidth);
         if (updateNeeded) {
             Display();
             updateNeeded = false;

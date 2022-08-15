@@ -2,22 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "DoubleScopeStatement")]
-public class DoubleScopeStatement : SingleScopeStatement
+[CreateAssetMenu(menuName = "DoubleScopeConditionalStatement")]
+public class DoubleScopeConditionalStatement : SingleScopeConditionalStatement
 {
     public Statement divider;
 
-    void Awake() {
-        Debug.Log("StatementAwake!!");
-
-        codeBlock = new CodeBlock();
-        codeBlock.hostStatement = this;
-        codeBlock.statements.Add(Instantiate(divider));
-        codeBlock.statements.Add(Instantiate(scopeEnder));
-
-        InitializeSegments();
-
-        hasMultiChoiceSegments = true;
+    protected override void InsertStatements() {
+        codeBlock.InsertStatement(Instantiate(divider), 0);
     }
 
     public override string GetCollapsedSuffix() {

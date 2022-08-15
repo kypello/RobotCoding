@@ -15,4 +15,7 @@ MonoBehaviour:
   statementText: <fun>turnRight<def>();
   scope: 0
   isScopeEnder: 0
+  displayOnParentScope: 0
+  invisibleInCode: 0
   hasMultiChoiceSegments: 0
+  id: turnright
