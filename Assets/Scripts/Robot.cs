@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Robot : MovingElement
 {
-    public CodeBlock rootBlock;
+    public static CodeBlock rootBlock = new CodeBlock();
     bool breakFlag = false;
+    bool continueFlag = false;
 
     public float rotationSpeed = 90f;
     bool cancelExecution = false;
 
-    bool paused = false;
+    //bool paused = false;
 
     bool runAttemptInQueue = false;
 
@@ -26,7 +27,7 @@ public class Robot : MovingElement
     MovingElement crate = null;
 
     void Awake() {
-        rootBlock = new CodeBlock();
+        //rootBlock = new CodeBlock();
     }
 
     public void StopRunningCode() {
@@ -36,6 +37,10 @@ public class Robot : MovingElement
 
     public int GetCurrentLine() {
         return currentLine;
+    }
+
+    public static void ResetCode() {
+        rootBlock = new CodeBlock();
     }
 
     public IEnumerator RunCode() {
@@ -88,6 +93,7 @@ public class Robot : MovingElement
                     break;
 
                 case "continue":
+                    continueFlag = true;
                     i = codeBlock.statements.Count;
                     break;
 
@@ -120,29 +126,16 @@ public class Robot : MovingElement
                         yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1);
                     }
                     breakFlag = false;
+                    continueFlag = false;
                     break;
 
                 case "repeat":
                     int loops = System.Int32.Parse(statement.highlightableSegments[0].GetText());
-                    for (int loop = 0; loop < loops; loop++) {
+                    for (int loop = 0; loop < loops && !breakFlag && state == State.Running; loop++) {
                         yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1);
-                        if (breakFlag || state == State.Stopping) {
-                            loop = loops;
-                            breakFlag = false;
-                        }
                     }
-                    break;
-
-                case "if":
-                    if (EvaluateCondition(statement)) {
-                        yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1);
-                        breakFlag = false;
-                    }
-                    break;
-
-                case "ifelse":
-                    yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1, !EvaluateCondition(statement));
                     breakFlag = false;
+                    continueFlag = false;
                     break;
 
                 case "while":
@@ -150,6 +143,23 @@ public class Robot : MovingElement
                         yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1);
                     }
                     breakFlag = false;
+                    continueFlag = false;
+                    break;
+
+                case "if":
+                    if (EvaluateCondition(statement)) {
+                        yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1);
+                        if (breakFlag || continueFlag) {
+                            i = codeBlock.statements.Count;
+                        }
+                    }
+                    break;
+
+                case "ifelse":
+                    yield return ExecuteCodeBlock(statement.codeBlock, startingLine + i + 1, !EvaluateCondition(statement));
+                    if (breakFlag || continueFlag) {
+                        i = codeBlock.statements.Count;
+                    }
                     break;
 
                 case "pickup":
@@ -276,7 +286,7 @@ public class Robot : MovingElement
                 return CheckForButtonBelow(transform.position + transform.forward * 2f) == equality;
             }
             else if (checkTarget == "crate") {
-                return (CheckForCrateAhead() || CheckForCrateBelow(transform.position + transform.forward * 2f)) == equality;
+                return CheckForCrateAhead() == equality;
             }
             else if (checkTarget == "metal") {
                 return (!CheckForButtonBelow(transform.position + transform.forward * 2f) && !CheckForCrateBelow(transform.position + transform.forward * 2f) && !CheckForWallAhead() && CheckForFloorBelow(transform.position + transform.forward * 2f)) == equality;

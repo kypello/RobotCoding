@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatementPalette : MonoBehaviour, ISlotManager
+public class StatementPalette : MonoBehaviour, ISlotManager, IScrollable
 {
     public int slotCount;
     public List<StatementSlot> slots = new List<StatementSlot>();

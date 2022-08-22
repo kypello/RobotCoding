@@ -52,7 +52,7 @@ public class DragDropManager : MonoBehaviour
         mouseStatementText.text = "";
     }
 
-    void DestroyStatement(Statement statement) {
+    public void DestroyStatement(Statement statement) {
         if (statement.codeBlock != null) {
             for (int i = statement.codeBlock.statements.Count - 1; i >= 0; i--) {
                 DestroyStatement(statement.codeBlock.statements[i]);

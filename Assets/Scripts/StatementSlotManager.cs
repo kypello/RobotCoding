@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class StatementSlotManager : MonoBehaviour, ISlotManager
+public class StatementSlotManager : MonoBehaviour, ISlotManager, IScrollable
 {
     public int slotCount = 30;
     public List<StatementSlot> slots = new List<StatementSlot>();
@@ -48,6 +48,76 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
     }
 
     void Update() {
+        if (highlightedSlotIndex != -1) {
+            StatementSlot highlightedSlot = slots[highlightedSlotIndex];
+            highlightedSlot.SetSegmentHighlight();
+
+
+            if (Input.GetMouseButtonDown(1)) {
+                if (!dragDropManager.draggingStatement) {
+                    codeChanged = true;
+
+                    if (highlightedSlot.statement.displayOnParentScope) {
+                        highlightedSlot.codeBlock.hostStatement.parentCodeBlock.RemoveStatement(highlightedSlot.codeBlock.hostStatement);
+                        dragDropManager.DestroyStatement(highlightedSlot.codeBlock.hostStatement);
+                    }
+                    else {
+                        highlightedSlot.codeBlock.RemoveStatement(highlightedSlot.statement);
+                        dragDropManager.DestroyStatement(highlightedSlot.statement);
+                    }
+
+                    ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), -1, true);
+                    RecalculateHighlightedSlot();
+                }
+            }
+            else if (Input.GetMouseButtonDown(0)) {
+                if (dragDropManager.draggingStatement) {
+                    codeChanged = true;
+
+                    highlightedSlot.codeBlock.InsertStatement(dragDropManager.statementBeingDragged, highlightedSlot.localIndex);
+                    dragDropManager.Drop(false);
+
+                    int lineCount = rootBlock.GetLineCount();
+                    if (lineCount >= slotCount) {
+                        scrollableArea.SetScrollLength(lineCount - (slotCount - 1));
+                    }
+                    else {
+                        scrollableArea.SetScrollLength(0);
+                    }
+
+                    ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), -1, true);
+                    RecalculateHighlightedSlot();
+                }
+                else {
+                    codeChanged = true;
+
+                    if (highlightedSlot.statement.displayOnParentScope) {
+                        dragDropManager.PickUp(highlightedSlot.codeBlock.hostStatement);
+                        highlightedSlot.codeBlock.hostStatement.parentCodeBlock.RemoveStatement(dragDropManager.statementBeingDragged);
+
+                        ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
+                        RecalculateHighlightedSlot();
+                    }
+                    else if (highlightedSlot.statement.highlightableSegments.Length > 0 && highlightedSlot.highlightedSegment != -1) {
+                        highlightedSlot.statement.highlightableSegments[highlightedSlot.highlightedSegment].Click(highlightedSlot);
+                    }
+                    else {
+                        dragDropManager.PickUp(highlightedSlot.statement);
+                        highlightedSlot.codeBlock.RemoveStatement(highlightedSlot.statement);
+
+                        ArrangeCodeBlock(rootBlock, -scrollableArea.GetOffset(), highlightedSlotIndex, true);
+                        RecalculateHighlightedSlot();
+                    }
+                }
+            }
+        }
+        else {
+            if (Input.GetMouseButtonDown(0) && dragDropManager.draggingStatement) {
+                dragDropManager.Drop(true);
+            }
+        }
+
+        /*
         if (highlightedSlotIndex != -1) {
             slots[highlightedSlotIndex].SetSegmentHighlight();
         }
@@ -103,6 +173,7 @@ public class StatementSlotManager : MonoBehaviour, ISlotManager
                 RecalculateHighlightedSlot();
             }
         }
+        */
     }
 
     public void SetCurrentRunningLine(int line) {

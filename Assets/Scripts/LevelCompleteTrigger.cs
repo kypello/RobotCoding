@@ -9,6 +9,7 @@ public class LevelCompleteTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider col) {
         if (col.gameObject.tag == "Player") {
+            Robot.ResetCode();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

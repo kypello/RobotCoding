@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerLook : MonoBehaviour
 {
     public CharacterController controller;
-    static float sensitivity = 500f;
+    public static float sensitivity = 500f;
     float sensitivityMessageTimer = -1f;
     float xRotation = 0f;
     public TMP_Text sensitivityUpdateText;
@@ -32,6 +32,7 @@ public class PlayerLook : MonoBehaviour
         if (control) {
             Cursor.lockState = CursorLockMode.Locked;
 
+            /*
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 sensitivity += 50f;
                 sensitivityUpdateText.gameObject.SetActive(true);
@@ -44,6 +45,7 @@ public class PlayerLook : MonoBehaviour
                 sensitivityUpdateText.text = "sensitivity: " + sensitivity;
                 sensitivityMessageTimer = 2f;
             }
+            */
 
             if (mouseMovedSinceUnlocking) {
                 xRotation -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;

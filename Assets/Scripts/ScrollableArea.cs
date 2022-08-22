@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class ScrollableArea : MonoBehaviour
 {
-    ISlotManager slotManager;
+    IScrollable slotManager;
 
     int scrollLength = 0;
     int offset = 0;
 
-    public float scrollbarBackHeight = 1260;
+    public float scrollbarBackLength = 1260;
+    //public float scrollbarCenter = 0;
     public float intervalHeight = 24;
-    public float scrollbarWidth = 24;
+    public float scrollbarThickness = 24;
 
     public GameObject fullScrollbar;
     public RectTransform scrollbar;
@@ -24,14 +25,29 @@ public class ScrollableArea : MonoBehaviour
     public float minMouseX;
     public float maxMouseX;
 
+    public bool isHorizontal;
+    Vector2 thicknessVector;
+    Vector2 lengthVector;
+
     const float canvasHeight = 1440f;
+    const float canvasWidth = 2560f;
     bool mouseDragging = false;
     float mouseOffset;
     float scrollbarBounds;
     float intervalSize;
 
     void Awake() {
-        slotManager = GetComponent<ISlotManager>();
+        slotManager = GetComponent<IScrollable>();
+
+        if (isHorizontal) {
+            thicknessVector = Vector2.up;
+            lengthVector = Vector2.right;
+        }
+        else {
+            thicknessVector = Vector2.right;
+            lengthVector = Vector2.up;
+        }
+
         UpdateScrollbarSize();
     }
 
@@ -46,7 +62,12 @@ public class ScrollableArea : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0)) {
                     mouseDragging = true;
-                    mouseOffset = (Input.mousePosition.y / Screen.height) - (scrollbar.anchoredPosition.y / canvasHeight);
+                    if (isHorizontal) {
+                        mouseOffset = (Input.mousePosition.x / Screen.width) - (scrollbar.anchoredPosition.x / canvasWidth);
+                    }
+                    else {
+                        mouseOffset = (Input.mousePosition.y / Screen.height) - (scrollbar.anchoredPosition.y / canvasHeight);
+                    }
                 }
             }
             else if (scrollbarMouseOver.mouseOverLastFrame) {
@@ -57,8 +78,14 @@ public class ScrollableArea : MonoBehaviour
         }
 
         if (mouseDragging) {
-            float mousePosition = Mathf.Clamp((Input.mousePosition.y / Screen.height - mouseOffset) * canvasHeight, -scrollbarBounds, scrollbarBounds);
-            scrollbar.anchoredPosition = new Vector2(0, mousePosition);
+            float mousePosition;
+            if (isHorizontal) {
+                mousePosition = Mathf.Clamp((Input.mousePosition.x / Screen.width - mouseOffset) * canvasWidth, -scrollbarBounds, scrollbarBounds);
+            }
+            else {
+                mousePosition = Mathf.Clamp((Input.mousePosition.y / Screen.height - mouseOffset) * canvasHeight, -scrollbarBounds, scrollbarBounds);
+            }
+            scrollbar.anchoredPosition = lengthVector * mousePosition;
 
             int closestPosition = 0;
             float closestPositionDistance = Mathf.Infinity;
@@ -112,6 +139,11 @@ public class ScrollableArea : MonoBehaviour
         return offset == scrollLength;
     }
 
+    public void SetOffset(int o) {
+        offset = Mathf.Clamp(o, 0, scrollLength);
+        UpdateScrollbarPosition();
+    }
+
     public void SetScrollLength(int l) {
         bool wasAtMax = offset == scrollLength && offset > 0;
         scrollLength = l;
@@ -128,16 +160,16 @@ public class ScrollableArea : MonoBehaviour
         else {
             fullScrollbar.SetActive(true);
 
-            float scrollbarHeight = scrollbarBackHeight - scrollLength * intervalHeight;
-            scrollbar.sizeDelta = new Vector2(scrollbarWidth, scrollbarHeight);
-            scrollbarBounds = (scrollbarBackHeight / 2) - (scrollbarHeight / 2);
-            intervalSize = (scrollbarBackHeight - scrollbarHeight) / scrollLength;
+            float scrollbarLength = scrollbarBackLength - scrollLength * intervalHeight;
+            scrollbar.sizeDelta = thicknessVector * scrollbarThickness + lengthVector * scrollbarLength;
+            scrollbarBounds = (scrollbarBackLength / 2) - (scrollbarLength / 2);
+            intervalSize = (scrollbarBackLength - scrollbarLength) / scrollLength;
 
             UpdateScrollbarPosition();
         }
     }
 
     void UpdateScrollbarPosition() {
-        scrollbar.anchoredPosition = new Vector2(0, scrollbarBounds - intervalSize * offset);
+        scrollbar.anchoredPosition = lengthVector * (scrollbarBounds - intervalSize * offset);
     }
 }

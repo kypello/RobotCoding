@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class SensitivityChanger : MonoBehaviour
+public class SensitivityChanger : MonoBehaviour, IScrollable
 {
-    static float sensitivity = 500f;
-    public PlayerLook playerLook;
+    public TMP_Text text;
+    ScrollableArea scrollableArea;
+    static int sensitivity = 10;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //playerLook.sensitivity = sensitivity;
+    void Start() {
+        scrollableArea = GetComponent<ScrollableArea>();
+        scrollableArea.SetScrollLength(40);
+        scrollableArea.SetOffset(40 - sensitivity);
     }
 
     // Update is called once per frame
     void Update()
     {
+        text.text = "> mouse sensitivity: <color=#AAFFAA>" + 50 * sensitivity;
+    }
 
+    public void UpdateScrollOffset(int scrollDelta) {
+        sensitivity -= scrollDelta;
+        PlayerLook.sensitivity = 50f * sensitivity;
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.35872743, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -196,57 +196,69 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[1]
+      propertyPath: templateStatements.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: e121795785abc3bdb9c12435bfbc8859, type: 2}
+      objectReference: {fileID: 11400000, guid: 4cc002d8fce0c4d12997e2ca92a2ea56, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[3]
+      propertyPath: templateStatements.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: f21800b50357b25cdb7f2a4bb59fb58b, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[4]
+      propertyPath: templateStatements.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 716a8d6163ea24f46985686b699b53ac, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[5]
+      propertyPath: templateStatements.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: ae6547d6265051208b3f3abc7e809244, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[7]
+      propertyPath: templateStatements.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: f368af7c1d28aa12890be1bcf1870def, type: 2}
+    - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+      propertyPath: templateStatements.Array.data[5]
       value: 
       objectReference: {fileID: 11400000, guid: baad0ae48d4fdbc1d84edec39589f920, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[8]
+      propertyPath: templateStatements.Array.data[6]
       value: 
       objectReference: {fileID: 11400000, guid: ea2c01e8ef09aeae9a77e23841e65b70, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[9]
+      propertyPath: templateStatements.Array.data[7]
       value: 
       objectReference: {fileID: 11400000, guid: dedd668e0be18f497a3f4cd4aae6f379, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[10]
+      propertyPath: templateStatements.Array.data[8]
       value: 
       objectReference: {fileID: 11400000, guid: 1289b6dce3adb59c284c0b43e325fe0e, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[11]
+      propertyPath: templateStatements.Array.data[9]
       value: 
       objectReference: {fileID: 11400000, guid: ccc16a68c61cc175e99d6fd8e2fb005e, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[12]
+      propertyPath: templateStatements.Array.data[10]
       value: 
       objectReference: {fileID: 11400000, guid: 0ccac6d10982e39979d0a6f0e40b902f, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[13]
+      propertyPath: templateStatements.Array.data[11]
       value: 
       objectReference: {fileID: 11400000, guid: e22cd88e3edae499eae4fbc04f31b394, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[14]
+      propertyPath: templateStatements.Array.data[12]
       value: 
       objectReference: {fileID: 11400000, guid: dfd8d166b9d97716caa14be4080b24ed, type: 2}
     - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
-      propertyPath: templateStatements.Array.data[15]
+      propertyPath: templateStatements.Array.data[13]
       value: 
       objectReference: {fileID: 11400000, guid: 1d7dce0e04f9393c9ae53ff1c6e7ccd0, type: 2}
+    - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+      propertyPath: templateStatements.Array.data[14]
+      value: 
+      objectReference: {fileID: 11400000, guid: 04c2d3b0e7d3eeb8191770a041b86ff6, type: 2}
+    - target: {fileID: 2975348181726913743, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
+      propertyPath: templateStatements.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: e121795785abc3bdb9c12435bfbc8859, type: 2}
     - target: {fileID: 3841967923567988542, guid: 775323c69b4a50a88a6f07d7d10cedab, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -306,7 +318,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -423,7 +435,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 3
+  serializedVersion: 4
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
@@ -436,7 +448,7 @@ LightingSettings:
   m_LightmapMaxSize: 1024
   m_BakeResolution: 40
   m_Padding: 2
-  m_TextureCompression: 1
+  m_LightmapCompression: 3
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -477,6 +489,7 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+  m_PVRTiledBaking: 0
 --- !u!1 &856026142
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 2, y: 0, z: -2}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -586,8 +599,9 @@ MonoBehaviour:
     m_Center: {x: 1, y: 0.0001, z: -1}
     m_Extent: {x: 0.5, y: 0, z: 0.5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Plane, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_HeightSegments: 0
@@ -1304,6 +1318,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1314,7 +1329,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh79726
+  m_Name: pb_Mesh89590
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1580,7 +1595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: -1, y: 1, z: -1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -1590,8 +1605,9 @@ MonoBehaviour:
     m_Center: {x: -0.5, y: 0.5, z: -0.5}
     m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &990022710
 MonoBehaviour:
@@ -2180,9 +2196,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006431966
 GameObject:
@@ -2283,7 +2300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: -1, y: 1, z: -1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -2293,8 +2310,9 @@ MonoBehaviour:
     m_Center: {x: -0.5, y: 0.5, z: -0.5}
     m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &1006431971
 MonoBehaviour:
@@ -3483,9 +3501,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1041945094
 GameObject:
@@ -3654,9 +3673,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3669,7 +3689,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh52086
+  m_Name: pb_Mesh89678
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3836,7 +3856,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3893,7 +3913,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3950,7 +3970,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4004,7 +4024,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh52008
+  m_Name: pb_Mesh89576
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4171,7 +4191,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4225,7 +4245,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh77450
+  m_Name: pb_Mesh89658
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4543,7 +4563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 2, y: 0, z: -2}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -4553,8 +4573,9 @@ MonoBehaviour:
     m_Center: {x: 1, y: 0.0001, z: -1}
     m_Extent: {x: 0.5, y: 0, z: 0.5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Plane, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_HeightSegments: 0
@@ -4645,9 +4666,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1575734067
 PrefabInstance:
@@ -4716,7 +4738,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-186552
+  m_Name: pb_Mesh89628
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4883,7 +4905,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4931,106 +4953,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
---- !u!1 &1868055348
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1868055350}
-  - component: {fileID: 1868055349}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &1868055349
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868055348}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &1868055350
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868055348}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!43 &1902590095
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh51992
+  m_Name: pb_Mesh89560
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5207,7 +5136,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4816040005658449352, guid: 6a85283801bfcbf3aae93f702d990d81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5369,7 +5298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 2, y: 0, z: -2}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -5379,8 +5308,9 @@ MonoBehaviour:
     m_Center: {x: 1, y: 0.0001, z: -1}
     m_Extent: {x: 0.5, y: 0, z: 0.5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Plane, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_HeightSegments: 0
@@ -5471,9 +5401,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1964423199
 Rigidbody:
@@ -5605,7 +5536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: -1, y: 1, z: -1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -5615,8 +5546,9 @@ MonoBehaviour:
     m_Center: {x: -0.5, y: 0.5, z: -0.5}
     m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &2065819805
 MonoBehaviour:
@@ -6205,7 +6137,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

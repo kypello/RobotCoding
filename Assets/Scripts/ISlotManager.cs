@@ -8,6 +8,4 @@ public interface ISlotManager
 
     void ReportMouseOver(int slotIndex);
     void ReportMouseLeave(int slotIndex);
-
-    void UpdateScrollOffset(int scrollDelta);
 }
